@@ -13,11 +13,17 @@ const errorMiddleware = require('./middleware/error.middleware');
 const wardrobeRoutes = require('./modules/wardrobe/wardrobe.routes');
 
 console.log(process.env.CLIENT_URL);
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://personal-wardrobe-fawn.vercel.app"
+];
 
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(helmet());
 
 app.use(morgan('dev'));

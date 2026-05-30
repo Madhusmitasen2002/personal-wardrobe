@@ -98,7 +98,6 @@ export default function UploadPage() {
     return (
       <div className="upload-page">
         <div className="upload-success animate-slide-up">
-          <div className="upload-success__icon">🎉</div>
           <h2 className="upload-success__title">Upload Successful!</h2>
           <p className="upload-success__text">Your item has been added to your wardrobe.</p>
           <div className="upload-success__actions">
