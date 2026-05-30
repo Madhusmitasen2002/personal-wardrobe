@@ -1,0 +1,302 @@
+/* ───────────── Wardrobe Page ───────────── */
+.wardrobe {
+  padding: 100px 24px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+.wardrobe__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.wardrobe__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.wardrobe__subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.wardrobe__upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+.wardrobe__upload-btn:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+/* Filters */
+.wardrobe__filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.wardrobe__filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+.wardrobe__filter:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+.wardrobe__filter--active {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: var(--border-accent);
+  color: var(--accent-end);
+}
+.wardrobe__filter-count {
+  font-size: 0.75rem;
+  padding: 1px 7px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+}
+.wardrobe__filter--active .wardrobe__filter-count {
+  background: rgba(124, 58, 237, 0.2);
+  color: var(--accent-end);
+}
+
+/* Grid */
+.wardrobe__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.wardrobe-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+.wardrobe-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+.wardrobe-card__img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+.wardrobe-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+.wardrobe-card:hover .wardrobe-card__img {
+  transform: scale(1.05);
+}
+.wardrobe-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  background: rgba(10, 10, 15, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent-end);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.wardrobe-card__info {
+  padding: 14px 16px;
+}
+.wardrobe-card__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Empty state */
+.wardrobe__empty {
+  text-align: center;
+  padding: 80px 20px;
+}
+.wardrobe__empty-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+.wardrobe__empty h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.wardrobe__empty p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.wardrobe__retry-btn {
+  padding: 10px 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+.wardrobe__retry-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Skeleton loading */
+.wardrobe-skeleton {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.wardrobe-skeleton__img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.wardrobe-skeleton__text {
+  height: 14px;
+  margin: 14px 16px 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.wardrobe-skeleton__text--short {
+  width: 60%;
+  margin-bottom: 14px;
+  margin-top: 8px;
+}
+
+/* ─── Modal ─── */
+.wardrobe-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+.wardrobe-modal__content {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  max-width: 480px;
+  width: 100%;
+  overflow: hidden;
+}
+.wardrobe-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  z-index: 1;
+  transition: background var(--transition-fast);
+}
+.wardrobe-modal__close:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+.wardrobe-modal__img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+.wardrobe-modal__details {
+  padding: 24px;
+}
+.wardrobe-modal__name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 12px 0 8px;
+}
+.wardrobe-modal__date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ───────────── Responsive ───────────── */
+@media (max-width: 768px) {
+  .wardrobe {
+    padding: 90px 16px 40px;
+  }
+  .wardrobe__title {
+    font-size: 1.6rem;
+  }
+  .wardrobe__grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wardrobe__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .wardrobe__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .wardrobe-card__info {
+    padding: 10px 12px;
+  }
+  .wardrobe-card__name {
+    font-size: 0.85rem;
+  }
+}
