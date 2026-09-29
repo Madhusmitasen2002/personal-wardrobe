@@ -45,6 +45,12 @@ export default function Navbar() {
                 Wardrobe
               </Link>
               <Link
+                to="/studio"
+                className={`navbar__link ${isActive('/studio') || isActive('/outfits') ? 'navbar__link--active' : ''}`}
+              >
+                Outfit Studio ✨
+              </Link>
+              <Link
                 to="/upload"
                 className={`navbar__link ${isActive('/upload') ? 'navbar__link--active' : ''}`}
               >
@@ -102,6 +108,12 @@ export default function Navbar() {
               className={`navbar__mobile-link ${isActive('/wardrobe') ? 'navbar__mobile-link--active' : ''}`}
             >
               Wardrobe
+            </Link>
+            <Link
+              to="/studio"
+              className={`navbar__mobile-link ${isActive('/studio') || isActive('/outfits') ? 'navbar__mobile-link--active' : ''}`}
+            >
+              Outfit Studio ✨
             </Link>
             <Link
               to="/upload"

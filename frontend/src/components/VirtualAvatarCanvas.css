@@ -1,0 +1,450 @@
+/* ───────────── Virtual Avatar Fitting Room & Try-On Canvas ───────────── */
+.avatar-canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.avatar-stage {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  min-height: 540px;
+  background: radial-gradient(circle at 45% 20%, rgba(124, 58, 237, 0.25) 0%, rgba(10, 10, 15, 0.95) 75%);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7), var(--shadow-md);
+  padding: 20px;
+}
+
+/* Ambient spotlight */
+.avatar-spotlight {
+  position: absolute;
+  top: 0;
+  left: 45%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 80%);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+  pointer-events: none;
+}
+
+/* Floor podium */
+.avatar-podium {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 36px;
+  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.45) 0%, rgba(124, 58, 237, 0.1) 60%, transparent 80%);
+  border-radius: 50%;
+  box-shadow: 0 0 35px var(--accent-glow);
+}
+
+/* Stage Header Bar */
+.avatar-stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  margin-bottom: 16px;
+}
+
+.avatar-vibe-badge {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(10, 10, 15, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-end);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.avatar-edit-trigger {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.avatar-edit-trigger:hover {
+  background: rgba(124, 58, 237, 0.35);
+  border-color: var(--accent-end);
+}
+
+/* ─── Mode 1: Split Lookbook (Model on Left + Real Garments on Right) ─── */
+.lookbook-split-layout {
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 16px;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+}
+
+.lookbook-model-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.lookbook-model-frame {
+  width: 220px;
+  height: 380px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--border-accent);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
+  background: #000;
+  position: relative;
+}
+
+.lookbook-model-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lookbook-model-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  border: 1px solid var(--border-primary);
+}
+
+/* Wardrobe Garments Column */
+.lookbook-garments-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.garment-rack-card {
+  background: rgba(15, 15, 24, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.garment-rack-card:hover {
+  border-color: var(--border-accent);
+  background: rgba(25, 25, 38, 0.95);
+  transform: translateX(-3px);
+}
+
+.garment-rack-thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.garment-rack-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.garment-rack-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.garment-rack-tag {
+  font-size: 0.65rem;
+  color: var(--accent-end);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.garment-rack-cycle-arrow {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.garment-rack-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* ─── Mode 2: Interactive Try-On Runway (Garments Layered On Body) ─── */
+.tryon-stage-area {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+}
+
+.tryon-figure-wrap {
+  width: 240px;
+  height: 420px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-lg);
+  overflow: visible;
+}
+
+/* The Base Model (Photo or Mannequin) */
+.tryon-base-model {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  filter: brightness(0.92) contrast(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Translucent Runway Mannequin Silhouette */
+.tryon-mannequin-svg {
+  width: 180px;
+  height: 400px;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+}
+
+/* Clothing Overlays with Natural Fitting */
+.tryon-garment {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  cursor: grab;
+}
+
+.tryon-garment img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+}
+
+.tryon-garment--blend img {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3)) contrast(1.1);
+}
+
+/* Dedicated Natural Zones */
+.tryon-garment--top {
+  top: 14%;
+  width: 175px;
+  height: 140px;
+  z-index: 15;
+}
+
+.tryon-garment--bottom {
+  top: 44%;
+  width: 155px;
+  height: 180px;
+  z-index: 12;
+}
+
+.tryon-garment--shoe {
+  bottom: 0%;
+  width: 120px;
+  height: 60px;
+  z-index: 10;
+}
+
+/* Adjustment Floating Controls */
+.tryon-adjuster-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 15, 24, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-primary);
+  font-size: 0.8rem;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+.tryon-adjuster-btn {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tryon-adjuster-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent-end);
+}
+
+.tryon-adjuster-btn--active {
+  background: rgba(124, 58, 237, 0.25);
+  color: var(--accent-end);
+  border: 1px solid var(--accent-end);
+}
+
+/* ─── Mode 3: Editorial Fashion Magazine Collage ─── */
+.editorial-collage-grid {
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 10px;
+  z-index: 5;
+}
+
+.editorial-card {
+  background: rgba(15, 15, 24, 0.85);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: all var(--transition-base);
+  height: 100%;
+  justify-content: center;
+}
+
+.editorial-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+
+.editorial-card--featured {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.editorial-card__img-wrap {
+  width: 100%;
+  flex: 1;
+  max-height: 220px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editorial-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+
+.editorial-card__badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-end);
+}
+
+.editorial-card__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+/* Mode Switcher Tabs */
+.stage-tab-switch {
+  display: flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px;
+  border-radius: var(--radius-full);
+  margin-top: 14px;
+  border: 1px solid var(--border-primary);
+  align-self: center;
+  z-index: 10;
+}
+
+.stage-tab-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.stage-tab-btn--active {
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  color: #fff;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}

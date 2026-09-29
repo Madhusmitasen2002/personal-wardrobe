@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import WardrobePage from './pages/WardrobePage';
 import UploadPage from './pages/UploadPage';
+import OutfitStudioPage from './pages/OutfitStudioPage';
 
 function App() {
   return (
@@ -23,6 +24,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <WardrobePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/studio"
+            element={
+              <ProtectedRoute>
+                <OutfitStudioPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/outfits"
+            element={
+              <ProtectedRoute>
+                <OutfitStudioPage />
               </ProtectedRoute>
             }
           />

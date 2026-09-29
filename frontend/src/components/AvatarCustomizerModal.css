@@ -1,0 +1,188 @@
+/* ───────────── Avatar Customizer Modal ───────────── */
+.avatar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2200;
+  padding: 20px;
+}
+
+.avatar-modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xl);
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-glow);
+}
+
+.avatar-modal__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar-modal__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.avatar-modal__body {
+  padding: 24px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .avatar-modal__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Avatar Preview Stand */
+.avatar-stand {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 300px;
+}
+
+.avatar-stand__pedestal {
+  position: absolute;
+  bottom: 16px;
+  width: 120px;
+  height: 24px;
+  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.avatar-stand__figure {
+  width: 160px;
+  height: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Customizer Controls */
+.avatar-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.avatar-tab-nav {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 10px;
+}
+
+.avatar-tab-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.avatar-tab-btn--active {
+  background: var(--accent-start);
+  color: #fff;
+}
+
+/* Model Selector */
+.avatar-presets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.avatar-preset-btn {
+  padding: 10px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.avatar-preset-btn--active {
+  border-color: var(--accent-end);
+  background: rgba(124, 58, 237, 0.15);
+}
+
+/* Color palettes */
+.avatar-palette {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.avatar-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform var(--transition-fast);
+}
+
+.avatar-swatch:hover {
+  transform: scale(1.15);
+}
+
+.avatar-swatch--active {
+  border-color: #fff;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Photo Upload Box */
+.avatar-photo-upload-box {
+  border: 2px dashed var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all var(--transition-fast);
+}
+
+.avatar-photo-upload-box:hover {
+  border-color: var(--accent-end);
+  background: rgba(124, 58, 237, 0.05);
+}
+
+.avatar-modal__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

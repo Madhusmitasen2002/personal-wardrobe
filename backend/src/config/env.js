@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
+const path = require('path');
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const requiredEnvVariables = [
   'PORT',
@@ -43,5 +44,8 @@ process.env.CLOUDINARY_API_SECRET,
 
   clientUrl: process.env.CLIENT_URL,
 
+  geminiApiKey: process.env.GEMINI_API_KEY || '',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+
   nodeEnv: process.env.NODE_ENV,
-};
+};

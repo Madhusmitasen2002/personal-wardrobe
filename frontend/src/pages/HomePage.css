@@ -236,6 +236,245 @@
   position: relative;
 }
 
+/* ─── Hero Weather Intelligence Card ─── */
+.hero-weather-card {
+  margin-top: 40px;
+  background: rgba(17, 17, 24, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: 20px 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 58, 237, 0.08);
+  text-align: left;
+  transition: all var(--transition-base);
+}
+
+.hero-weather-card:hover {
+  border-color: rgba(124, 58, 237, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 58, 237, 0.15);
+}
+
+.hero-weather-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+}
+
+.hero-weather-card__city-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.city-pill {
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.city-pill:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.city-pill--active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(168, 85, 247, 0.35));
+  border-color: var(--accent-start);
+  color: #fff;
+}
+
+.hero-weather-card__live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #10b981;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.hero-weather-card__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 14px;
+  flex-wrap: wrap;
+}
+
+.hero-weather-temp-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-weather-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.hero-weather-temp {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.hero-weather-cond {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.hero-weather-formula {
+  flex: 1;
+  min-width: 240px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--accent-start);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.hero-weather-formula__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-end);
+  margin-bottom: 3px;
+}
+
+.hero-weather-formula__text {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.hero-weather-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.hero-weather-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* ─── Feature Card Top & Badge ─── */
+.feature-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.feature-card__badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #c084fc;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Try-On Banner ─── */
+.tryon-banner {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  padding: 48px 36px;
+  background: linear-gradient(135deg, rgba(20, 20, 32, 0.85), rgba(30, 20, 45, 0.85));
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.tryon-banner__glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-start) 0%, transparent 70%);
+  opacity: 0.12;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.tryon-banner__content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.tryon-banner__tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c084fc;
+  margin-bottom: 12px;
+}
+
+.tryon-banner__title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.tryon-banner__desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.tryon-banner__actions {
+  display: flex;
+  justify-content: center;
+}
+
 /* ───────────── Responsive ───────────── */
 @media (max-width: 768px) {
   .hero__title {

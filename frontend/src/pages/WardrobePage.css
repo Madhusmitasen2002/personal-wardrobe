@@ -270,6 +270,143 @@
   color: var(--text-muted);
 }
 
+/* Modal action buttons */
+.wardrobe-modal__edit-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.wardrobe-modal__edit-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wardrobe-modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-primary);
+}
+
+.wardrobe-modal__action-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.wardrobe-modal__action-btn--studio {
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  color: #fff;
+}
+.wardrobe-modal__action-btn--studio:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+.wardrobe-modal__action-btn--delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.wardrobe-modal__action-btn--delete:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.wardrobe-modal__cancel-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.wardrobe-modal__save-btn {
+  padding: 8px 18px;
+  background: var(--accent-start);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Search bar & Controls */
+.wardrobe__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wardrobe__search-wrap {
+  position: relative;
+  min-width: 240px;
+}
+
+.wardrobe__search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.wardrobe__search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  padding: 8px 36px 8px 36px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.wardrobe__search-input:focus {
+  border-color: var(--accent-end);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.wardrobe__search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
 /* ───────────── Responsive ───────────── */
 @media (max-width: 768px) {
   .wardrobe {

@@ -18,8 +18,13 @@ const getItemsByUser = (userId) => {
 
 const getItemById = (itemId, userId) => {
     return Wardrobe
-        .findById({ _id: itemId, userId });
-}
+        .findOne({ _id: itemId, userId });
+};
+
+const deleteItem = (itemId, userId) => {
+    return Wardrobe
+        .findOneAndDelete({ _id: itemId, userId });
+};
 
 const updateItem = (
     itemId,
@@ -49,5 +54,6 @@ module.exports = {
     createItem,
     getItemsByUser,
     getItemById,
-    updateItem
+    updateItem,
+    deleteItem
 };

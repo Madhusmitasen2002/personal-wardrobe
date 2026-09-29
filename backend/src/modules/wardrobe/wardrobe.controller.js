@@ -1,167 +1,73 @@
-const service =
-    require(
-        './wardrobe.service'
-    );
+const service = require('./wardrobe.service');
+const asyncHandler = require('../../middleware/async.middleware');
+const ApiResponse = require('../../utils/ApiResponse');
 
-const asyncHandler =
-    require(
-        '../../middleware/async.middleware'
-    );
+const upload = asyncHandler(async (req, res) => {
+  const result = await service.upload(
+    req.user.userId,
+    req.file,
+    req.body
+  );
 
-const ApiResponse =
-    require(
-        '../../utils/ApiResponse'
-    );
+  return res
+    .status(201)
+    .json(new ApiResponse(201, result, 'Garment uploaded and cataloged successfully'));
+});
 
-const upload =
-    asyncHandler(
+const analyze = asyncHandler(async (req, res) => {
+  const result = await service.analyze(
+    req.file,
+    req.body.hintName || req.file?.originalname
+  );
 
-        async (
-            req,
-            res
-        ) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, result, 'Garment analyzed and auto-tagged successfully'));
+});
 
-            const result =
-                await service
-                    .upload(
+const getMyItems = asyncHandler(async (req, res) => {
+  const items = await service.getMyItems(req.user.userId);
+  return res
+    .status(200)
+    .json(new ApiResponse(200, items, 'Wardrobe items retrieved'));
+});
 
-                        req.user.userId,
+const getItem = asyncHandler(async (req, res) => {
+  const result = await service.getItem(
+    req.params.id,
+    req.user.userId
+  );
+  return res
+    .status(200)
+    .json(new ApiResponse(200, result, 'Item fetched'));
+});
 
-                        req.file,
+const updateItem = asyncHandler(async (req, res) => {
+  const result = await service.updateItem(
+    req.params.id,
+    req.user.userId,
+    req.body
+  );
+  return res
+    .status(200)
+    .json(new ApiResponse(200, result, 'Item updated'));
+});
 
-                        req.body
-
-                    );
-
-            return res
-                .status(201)
-                .json(
-
-                    new ApiResponse(
-
-                        201,
-
-                        result,
-
-                        'Uploaded'
-
-                    )
-
-                );
-
-        });
-
-const getMyItems =
-    asyncHandler(async (
-        req,
-        res
-    ) => {
-
-        const items =
-            await service
-                .getMyItems(
-                    req.user.userId
-                );
-
-        return res
-            .status(200)
-            .json(
-
-                new ApiResponse(
-
-                    200,
-
-                    items,
-
-                    'Items retrieved'
-
-                )
-
-            );
-
-    });
-
-const getItem =
-
-    asyncHandler(
-
-        async (
-            req,
-            res
-        ) => {
-
-            const result =
-
-                await service
-                    .getItem(
-
-                        req.params.id,
-
-                        req.user.userId
-
-                    );
-
-            return res
-                .status(200)
-                .json(
-
-                    new ApiResponse(
-
-                        200,
-
-                        result,
-
-                        'Item fetched'
-
-                    )
-
-                );
-
-        });
-
-const updateItem =
-
-    asyncHandler(
-
-        async (
-            req,
-            res
-        ) => {
-
-            const result =
-
-                await service
-                    .updateItem(
-
-                        req.params.id,
-
-                        req.user.userId,
-
-                        req.body
-
-                    );
-
-            return res
-                .status(200)
-                .json(
-
-                    new ApiResponse(
-
-                        200,
-
-                        result,
-
-                        'Item updated'
-
-                    )
-
-                );
-
-        });
+const deleteItem = asyncHandler(async (req, res) => {
+  const result = await service.deleteItem(
+    req.params.id,
+    req.user.userId
+  );
+  return res
+    .status(200)
+    .json(new ApiResponse(200, result, 'Item deleted successfully'));
+});
 
 module.exports = {
-    upload,
-    getMyItems,
-    getItem,
-    updateItem
+  upload,
+  analyze,
+  getMyItems,
+  getItem,
+  updateItem,
+  deleteItem,
 };

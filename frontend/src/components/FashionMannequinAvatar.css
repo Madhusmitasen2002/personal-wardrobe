@@ -1,0 +1,54 @@
+/* ───────────── High-Fashion Mannequin Avatar Styles ───────────── */
+.fashion-avatar-container {
+  position: relative;
+  user-select: none;
+}
+
+.fashion-garment-layer-stack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.garment-anchor-slot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+}
+
+.garment-anchor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: contrast(1.04) brightness(1.02);
+}
+
+.garment-anchor-img--layer {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
+}
+
+/* Slot alignment specifics */
+.garment-anchor-slot--top {
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.garment-anchor-slot--bottom {
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.garment-anchor-slot--layer {
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.garment-anchor-slot--shoe {
+  transform: translateX(-50%);
+  left: 50%;
+}
