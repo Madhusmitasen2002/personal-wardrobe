@@ -4,18 +4,18 @@ import LoadingSpinner from './LoadingSpinner';
 import './AiStylistModal.css';
 
 const OCCASIONS = [
-  { label: '💼 Job Interview', key: 'Job Interview', prompt: 'I have a job interview at a creative agency and need to look polished but contemporary' },
-  { label: '🍷 Smart Casual Dinner', key: 'Smart Casual Dinner', prompt: 'Smart casual dinner with friends at an upscale rooftop restaurant' },
-  { label: '☕ Weekend Brunch', key: 'Weekend Brunch', prompt: 'Relaxed Sunday morning brunch and coffee run' },
-  { label: '✨ Date Night', key: 'Date Night', prompt: 'Evening romantic dinner date with ambient lighting' },
-  { label: '✈️ Airport / Travel', key: 'Travel', prompt: 'Chic, comfortable travel outfit for a long flight' },
-  { label: '🎨 Art Gallery Opening', key: 'Gallery Opening', prompt: 'Modern minimalist look for an evening art exhibition' },
+  { label: 'Job Interview', key: 'Job Interview', prompt: 'I have a job interview and need to look polished and professional' },
+  { label: 'Smart Casual', key: 'Smart Casual Dinner', prompt: 'Smart casual look for an evening out or dinner with friends' },
+  { label: 'Weekend Brunch', key: 'Weekend Brunch', prompt: 'Relaxed weekend morning outfit, comfortable and chic' },
+  { label: 'Date Night', key: 'Date Night', prompt: 'Evening dinner date outfit with sophisticated styling' },
+  { label: 'Travel', key: 'Travel', prompt: 'Comfortable, stylish travel outfit for a flight or road trip' },
+  { label: 'Evening Event', key: 'Gallery Opening', prompt: 'Refined modern look for an evening gathering or event' },
 ];
 
 export default function AiStylistModal({ isOpen, onClose, onApplyOutfit, onSaveOutfit }) {
   const [selectedOccasion, setSelectedOccasion] = useState(OCCASIONS[0]);
   const [customPrompt, setCustomPrompt] = useState(OCCASIONS[0].prompt);
-  const [city, setCity] = useState('New York');
+  const [city, setCity] = useState('Tinsukia');
   const [weather, setWeather] = useState(null);
   const [loadingWeather, setLoadingWeather] = useState(false);
 
@@ -139,14 +139,18 @@ export default function AiStylistModal({ isOpen, onClose, onApplyOutfit, onSaveO
         {/* Header */}
         <div className="stylist-modal__header">
           <div className="stylist-modal__title-row">
-            <div className="stylist-modal__icon-badge">✨</div>
+            <div className="stylist-modal__icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 4a3 3 0 0 0-3 3c0 .8.4 1.5 1 2l-7.5 9.5A1.5 1.5 0 0 0 3.7 21h16.6a1.5 1.5 0 0 0 1.2-2.5L14 9c.6-.5 1-1.2 1-2a3 3 0 0 0-3-3z"/>
+              </svg>
+            </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <h2 className="stylist-modal__title">AI Personal Stylist</h2>
+                <h2 className="stylist-modal__title">Personal Stylist</h2>
                 {modelUsed && <span className="stylist-model-badge">{modelUsed}</span>}
               </div>
               <p className="stylist-modal__subtitle">
-                Weather-aware, color-theoretic styling calibrated from your personal closet
+                Outfit recommendations curated from pieces in your wardrobe
               </p>
             </div>
           </div>
@@ -161,7 +165,7 @@ export default function AiStylistModal({ isOpen, onClose, onApplyOutfit, onSaveO
             <span className="stylist-weather-icon">{weather?.icon || '🌤️'}</span>
             <div>
               <span className="stylist-weather-temp">
-                {weather ? `${weather.temp}°C` : '22°C'} · {weather?.conditionLabel || 'Pleasant'}
+                {weather?.city ? `${weather.city} · ` : ''}{weather ? `${weather.temp}°C` : '22°C'} · {weather?.conditionLabel || 'Pleasant'}
               </span>
               <span className="stylist-weather-details">
                 Feels like {weather ? `${weather.feelsLike}°C` : '22°C'} · Humidity {weather?.humidity || 50}% · UV {weather?.uvIndex || 3}
@@ -176,7 +180,7 @@ export default function AiStylistModal({ isOpen, onClose, onApplyOutfit, onSaveO
               onChange={(e) => setCity(e.target.value)}
               onBlur={() => fetchWeather(city)}
               onKeyDown={(e) => e.key === 'Enter' && fetchWeather(city)}
-              placeholder="City (e.g. Paris, Tokyo)"
+              placeholder="City (e.g. Tinsukia)"
               className="stylist-city-input"
             />
             <button
@@ -226,7 +230,7 @@ export default function AiStylistModal({ isOpen, onClose, onApplyOutfit, onSaveO
                   Analyzing Closet...
                 </>
               ) : (
-                '✨ Consult AI Stylist'
+                'Find Outfits'
               )}
             </button>
           </form>

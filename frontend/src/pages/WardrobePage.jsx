@@ -130,7 +130,7 @@ export default function WardrobePage() {
             }}
             onClick={() => setIsStylistOpen(true)}
           >
-            ✨ Ask AI Stylist
+            Ask Stylist
           </button>
           <Link
             to="/studio"
@@ -141,7 +141,7 @@ export default function WardrobePage() {
               color: 'var(--text-primary)',
             }}
           >
-            👗 Mix & Match Runway
+            Mix & Match Studio
           </Link>
           <Link to="/upload" className="wardrobe__upload-btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -303,7 +303,7 @@ export default function WardrobePage() {
                       onClick={handleDeleteItem}
                       disabled={deleting}
                     >
-                      {deleting ? 'Deleting...' : '🗑️ Delete'}
+                      {deleting ? 'Deleting...' : 'Delete'}
                     </button>
                   </div>
                 </>

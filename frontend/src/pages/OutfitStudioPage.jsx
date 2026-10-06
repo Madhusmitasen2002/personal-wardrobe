@@ -309,28 +309,27 @@ export default function OutfitStudioPage() {
             title="Launch Hybrid 2D Mannequin + AI Photo Try-On Studio"
             style={{ background: 'linear-gradient(135deg, var(--accent-start), var(--accent-end))', boxShadow: '0 4px 20px var(--accent-glow)' }}
           >
-            ✨ Next-Gen Studio (2D + AI)
+            Try-On Canvas
           </button>
 
-          {/* Ask AI Stylist Button */}
+          {/* Ask Stylist Button */}
           <button
             type="button"
             className="studio__btn studio__btn--secondary"
             onClick={() => setIsStylistOpen(true)}
-            title="Ask AI Personal Stylist for recommendations or capsule essentials"
+            title="Ask Stylist for recommendations"
           >
-            ✨ Ask AI Stylist
+            Ask Stylist
           </button>
-
 
           {/* Customize Avatar Button */}
           <button
             type="button"
             className="studio__btn studio__btn--secondary"
             onClick={() => setIsAvatarModalOpen(true)}
-            title="Change avatar skin, hair, or upload personal selfie"
+            title="Customize avatar profile"
           >
-            👤 Avatar Profile
+            Avatar Profile
           </button>
 
           {/* Shuffle Button */}
@@ -341,11 +340,11 @@ export default function OutfitStudioPage() {
             disabled={!hasAnyItems}
             title="Randomize outfit combination"
           >
-            🎲 Surprise Me
+            Shuffle
           </button>
 
           <Link to="/upload" className="studio__btn studio__btn--secondary">
-            + Upload Item
+            Upload Item
           </Link>
         </div>
       </div>
@@ -358,23 +357,22 @@ export default function OutfitStudioPage() {
 
       {!hasAnyItems ? (
         <div className="wardrobe__empty animate-fade-in">
-          <div className="wardrobe__empty-icon">✨</div>
           <h3>Your wardrobe is currently empty</h3>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
             <button
               type="button"
               className="studio__btn studio__btn--primary"
               onClick={() => setIsStylistOpen(true)}
-              style={{ background: 'linear-gradient(135deg, var(--accent-start), var(--accent-end))' }}
+              style={{ background: 'var(--text-primary)' }}
             >
-              ✨ Ask AI Stylist (Capsule Advice)
+              Ask Stylist
             </button>
             <button
               type="button"
               className="studio__btn studio__btn--secondary"
               onClick={() => setIsProtoOpen(true)}
             >
-              🧍 Try-On Studio (2D + AI)
+              Try-On Studio
             </button>
             <Link to="/upload" className="studio__btn studio__btn--secondary">
               Upload Garment

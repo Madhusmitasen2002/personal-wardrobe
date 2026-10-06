@@ -44,7 +44,11 @@ export default function LoginPage() {
 
       <div className="auth-card animate-slide-up">
         <div className="auth-card__header">
-          <div className="auth-card__icon">👔</div>
+          <div className="auth-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent-warm)' }}>
+              <path d="M12 4a3 3 0 0 0-3 3c0 .8.4 1.5 1 2l-7.5 9.5A1.5 1.5 0 0 0 3.7 21h16.6a1.5 1.5 0 0 0 1.2-2.5L14 9c.6-.5 1-1.2 1-2a3 3 0 0 0-3-3z"/>
+            </svg>
+          </div>
           <h1 className="auth-card__title">Welcome back</h1>
           <p className="auth-card__subtitle">Sign in to access your wardrobe</p>
         </div>

@@ -4,83 +4,124 @@ import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import './HomePage.css';
 
-const CITIES = ['New York', 'Paris', 'Tokyo', 'London', 'Milan'];
+const PRESET_CITIES = ['Tinsukia', 'Guwahati', 'Delhi', 'Mumbai', 'London', 'Paris'];
 
 const CORE_PILLARS = [
   {
-    icon: '🧠',
-    badge: 'Gemini 2.5 Engine',
-    title: 'AI Stylist & Color Theory',
+    step: '01',
+    badge: 'Catalog',
+    title: 'Digital Closet Organization',
     description:
-      'Harmonizes 60-30-10 dominant, secondary, and accent color proportions. Strictly validates garment IDs with closed-loop feedback learning.',
+      'Upload photos of your clothes. Backgrounds are removed cleanly so each piece looks neat, crisp, and catalog-ready.',
   },
   {
-    icon: '🧍',
-    badge: 'Hybrid Try-On Studio',
-    title: 'Parametric Mannequin & AI Photo Model',
+    step: '02',
+    badge: 'Forecast',
+    title: 'Weather-Ready Dressing',
     description:
-      'Instant 2D SVG mannequin with anatomical scaling (shoulders, waist, hips), multi-layer Z-stacking, plus on-demand photorealistic AI rendering.',
+      'Check the local temperature and get smart layering suggestions before you head out, from crisp mornings to warm afternoons.',
   },
   {
-    icon: '👁️',
-    badge: 'Gemini Vision',
-    title: 'Instant Multi-Attribute Auto-Tagging',
+    step: '03',
+    badge: 'Styling',
+    title: 'Effortless Combinations',
     description:
-      'Upload a garment photo to instantly detect subcategories, lengths, layer types, fabric textures, formality scores (1-10), and editable tags.',
+      'Discover fresh pairings from items already hanging in your closet using balanced color palettes and classic silhouettes.',
   },
   {
-    icon: '🌦️',
-    badge: 'Live Climate Intelligence',
-    title: 'Weather-Aware Layering',
+    step: '04',
+    badge: 'Studio',
+    title: 'Mix & Match Canvas',
     description:
-      'Real-time temperature and precipitation awareness prevents cold underdressing, manages rain defense, and suggests temperature-specific layering.',
+      'Combine tops, bottoms, shoes, and outerwear on a clean canvas to test and plan your favorite looks before stepping out.',
   },
 ];
 
 export default function HomePage() {
   const { isAuthenticated } = useAuth();
-  const [city, setCity] = useState('New York');
+  const [city, setCity] = useState('Tinsukia');
+  const [cityInput, setCityInput] = useState('');
   const [weather, setWeather] = useState(null);
   const [loadingWeather, setLoadingWeather] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchWeather = async () => {
-      setLoadingWeather(true);
-      try {
-        const res = await api.get(`/weather?city=${encodeURIComponent(city)}`);
-        if (isMounted) setWeather(res.data.data);
-      } catch (err) {
-        console.warn('Weather fetch error:', err);
-      } finally {
-        if (isMounted) setLoadingWeather(false);
+  // Fetch weather by city name
+  const fetchWeatherByCity = async (cityName) => {
+    setLoadingWeather(true);
+    try {
+      const res = await api.get(`/weather?city=${encodeURIComponent(cityName)}`);
+      if (res.data?.data) {
+        setWeather(res.data.data);
       }
-    };
-    fetchWeather();
-    return () => {
-      isMounted = false;
-    };
+    } catch (err) {
+      console.warn('Weather fetch error:', err);
+    } finally {
+      setLoadingWeather(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeatherByCity(city);
   }, [city]);
+
+  // Search custom city
+  const handleCitySearch = (e) => {
+    e.preventDefault();
+    const trimmed = cityInput.trim();
+    if (trimmed) {
+      setCity(trimmed);
+      setCityInput('');
+    }
+  };
+
+  // Auto-detect location via browser GPS
+  const handleDetectLocation = () => {
+    if (!navigator.geolocation) {
+      alert('Location is not supported by your browser');
+      return;
+    }
+    setLoadingWeather(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await api.get(`/weather?lat=${latitude}&lon=${longitude}`);
+          if (res.data?.data) {
+            setWeather(res.data.data);
+            setCity(res.data.data.city || 'Your Location');
+          }
+        } catch (err) {
+          console.warn('Geolocation weather error:', err);
+        } finally {
+          setLoadingWeather(false);
+        }
+      },
+      (err) => {
+        console.warn('Location permission denied or unavailable:', err);
+        setLoadingWeather(false);
+      },
+      { timeout: 8000 }
+    );
+  };
 
   // Compute daily weather-ready recommendation
   const getStylingAdvice = () => {
-    if (!weather) return 'Analyzing local climate data...';
+    if (!weather) return 'Checking local weather forecast...';
     const temp = weather.temp;
     const isRaining = weather.precipitation > 0;
 
     let advice = '';
     if (temp < 10) {
-      advice = 'Cold climate: Heavy knitwear + tailored wool overcoat + insulated boots recommended.';
+      advice = 'Chilly day: Ideal for warm knitwear, a tailored wool coat, and boots.';
     } else if (temp < 18) {
-      advice = 'Mild & crisp: Layer a merino crewneck or blazer over cotton shirt with structured trousers.';
+      advice = 'Crisp & cool: A trench or knit sweater layered over a clean base with tailored pants.';
     } else if (temp < 25) {
-      advice = 'Pleasant weather: Breathable cotton top paired with tailored chinos and clean sneakers.';
+      advice = 'Mild & comfortable: A breathable cotton shirt, relaxed chinos, or an effortless dress.';
     } else {
-      advice = 'Warm climate: Ultra-light linen, relaxed silhouettes, and breathable open footwear.';
+      advice = 'Warm & sunny: Light linen, breezy silhouettes, and open summer footwear.';
     }
 
     if (isRaining) {
-      advice += ' 🌧️ Rain defense active: Water-resistant outerwear and weather-sealed footwear prioritized.';
+      advice += ' Keep an umbrella or light water-resistant layer handy.';
     }
     return advice;
   };
@@ -89,39 +130,34 @@ export default function HomePage() {
     <div className="home">
       {/* ─── Hero Section ─── */}
       <section className="hero">
-        <div className="hero__bg-glow" />
         <div className="hero__content animate-slide-up">
-          <span className="hero__badge">✨ Haute Tech Fashion Platform</span>
+          <span className="hero__badge">Intentional Wardrobe & Styling</span>
           <h1 className="hero__title">
-            The Intelligent
+            Curate what you own.
             <br />
-            <span className="hero__title-gradient">Digital Wardrobe</span>
+            <span className="hero__title-serif">Dress with effortless ease.</span>
           </h1>
           <p className="hero__subtitle">
-            Next-generation wardrobe intelligence powered by Gemini 2.5.
-            Parametric mannequin try-on, automated vision cataloging, and live weather-calibrated styling.
+            A clean digital closet to organize your real clothes, discover fresh combinations, and plan outfits suited to today's weather.
           </p>
 
           <div className="hero__actions">
             {isAuthenticated ? (
               <>
-                <Link to="/studio?openStylist=true" className="hero__btn hero__btn--primary">
-                  ✨ Ask AI Stylist
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
+                <Link to="/wardrobe" className="hero__btn hero__btn--primary">
+                  Open Wardrobe
                 </Link>
                 <Link to="/studio" className="hero__btn hero__btn--secondary">
-                  🧍 Runway Studio
+                  Outfit Studio
                 </Link>
                 <Link to="/upload" className="hero__btn hero__btn--secondary">
-                  + Snap & Upload
+                  Add Item
                 </Link>
               </>
             ) : (
               <>
                 <Link to="/register" className="hero__btn hero__btn--primary">
-                  Get Started Free
+                  Start Your Wardrobe
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
@@ -133,23 +169,54 @@ export default function HomePage() {
             )}
           </div>
 
-          {/* ─── Live Weather Intelligence Hero Card ─── */}
+          {/* ─── Weather Capsule Card ─── */}
           <div className="hero-weather-card animate-fade-in">
             <div className="hero-weather-card__header">
-              <div className="hero-weather-card__city-pills">
-                {CITIES.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    className={`city-pill ${city === c ? 'city-pill--active' : ''}`}
-                    onClick={() => setCity(c)}
-                  >
-                    {c}
+              <div className="hero-weather-card__city-controls">
+                <div className="hero-weather-card__city-pills">
+                  {PRESET_CITIES.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      className={`city-pill ${city.toLowerCase() === c.toLowerCase() ? 'city-pill--active' : ''}`}
+                      onClick={() => setCity(c)}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+
+                {/* City Search Box */}
+                <form onSubmit={handleCitySearch} className="city-search-form">
+                  <input
+                    type="text"
+                    placeholder="Search any city..."
+                    value={cityInput}
+                    onChange={(e) => setCityInput(e.target.value)}
+                    className="city-search-input"
+                  />
+                  <button type="submit" className="city-search-btn" title="Search city weather">
+                    Search
                   </button>
-                ))}
+                </form>
+
+                {/* Auto-detect GPS button */}
+                <button
+                  type="button"
+                  onClick={handleDetectLocation}
+                  className="city-locate-btn"
+                  title="Detect my current location"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  My Location
+                </button>
               </div>
+
               <span className="hero-weather-card__live-tag">
-                <span className="live-dot" /> LIVE CLIMATE
+                <span className="live-dot" /> TODAY'S FORECAST
               </span>
             </div>
 
@@ -157,6 +224,9 @@ export default function HomePage() {
               <div className="hero-weather-temp-col">
                 <span className="hero-weather-icon">{weather?.icon || '🌤️'}</span>
                 <div>
+                  <div className="hero-weather-location-label">
+                    {weather?.city || city}
+                  </div>
                   <div className="hero-weather-temp">
                     {loadingWeather ? '...' : `${weather?.temp ?? 20}°C`}
                   </div>
@@ -167,7 +237,7 @@ export default function HomePage() {
               </div>
 
               <div className="hero-weather-formula">
-                <div className="hero-weather-formula__label">TODAY'S CLIMATE FORMULA</div>
+                <div className="hero-weather-formula__label">TODAY'S STYLING NOTE</div>
                 <div className="hero-weather-formula__text">{getStylingAdvice()}</div>
               </div>
 
@@ -175,30 +245,23 @@ export default function HomePage() {
                 <Link
                   to="/studio?openStylist=true"
                   className="hero-weather-cta"
-                  title="Generate outfits calibrated for current weather"
+                  title="Plan an outfit for today's weather"
                 >
-                  Generate Look ↗
+                  Plan Outfit →
                 </Link>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Decorative Floating Fashion Chips */}
-        <div className="hero__floating" aria-hidden="true">
-          <div className="hero__float-card hero__float-card--1">🧥</div>
-          <div className="hero__float-card hero__float-card--2">👔</div>
-          <div className="hero__float-card hero__float-card--3">👠</div>
         </div>
       </section>
 
       {/* ─── Core Pillars Section ─── */}
       <section className="features">
         <div className="features__header animate-fade-in">
-          <span className="hero__badge" style={{ marginBottom: 12 }}>Architecture</span>
-          <h2 className="features__title">Engineered for Sartorial Precision</h2>
+          <span className="hero__badge" style={{ marginBottom: 12 }}>How It Works</span>
+          <h2 className="features__title">Simplicity Meets Everyday Style</h2>
           <p className="features__subtitle">
-            Not another basic clothing list. A high-fashion digital operating system.
+            Everything you need to get the most out of the clothes you already love.
           </p>
         </div>
 
@@ -206,7 +269,7 @@ export default function HomePage() {
           {CORE_PILLARS.map((f, i) => (
             <div key={i} className="feature-card animate-slide-up">
               <div className="feature-card__top">
-                <div className="feature-card__icon">{f.icon}</div>
+                <div className="feature-card__step">{f.step}</div>
                 <span className="feature-card__badge">{f.badge}</span>
               </div>
               <h3 className="feature-card__title">{f.title}</h3>
@@ -218,17 +281,15 @@ export default function HomePage() {
 
       {/* ─── Interactive Try-On Banner ─── */}
       <section className="tryon-banner animate-fade-in">
-        <div className="tryon-banner__glow" />
         <div className="tryon-banner__content">
-          <div className="tryon-banner__tag">✨ Next-Generation Try-On</div>
-          <h2 className="tryon-banner__title">Experience the Hybrid Try-On Studio</h2>
+          <div className="tryon-banner__tag">Outfit Studio</div>
+          <h2 className="tryon-banner__title">Preview Looks Before Stepping Out</h2>
           <p className="tryon-banner__desc">
-            Toggle seamlessly between instant responsive 2D SVG mannequin rendering and on-demand
-            photorealistic AI photo generation. Compare before & after with an interactive split slider.
+            Mix and match pieces on an interactive canvas. Compare combinations side-by-side and curate complete outfits with confidence.
           </p>
           <div className="tryon-banner__actions">
-            <Link to="/studio?openProto=true" className="hero__btn hero__btn--primary">
-              Launch Try-On Studio ↗
+            <Link to="/studio" className="hero__btn hero__btn--primary">
+              Open Outfit Studio →
             </Link>
           </div>
         </div>
@@ -236,10 +297,9 @@ export default function HomePage() {
 
       {/* ─── CTA Section ─── */}
       <section className="cta animate-fade-in">
-        <div className="cta__glow" />
-        <h2 className="cta__title">Elevate Your Daily Style</h2>
+        <h2 className="cta__title">Start Building Your Digital Wardrobe</h2>
         <p className="cta__subtitle">
-          Digitize your collection and unlock live AI styling powered by Gemini 2.5.
+          Organize your closet and discover new ways to wear what you already have.
         </p>
         <Link
           to={isAuthenticated ? '/wardrobe' : '/register'}

@@ -130,7 +130,7 @@ export default function UploadPage() {
 
   const triggerAiAnalysis = async (file, hintName) => {
     setAnalyzingAi(true);
-    setAiTagNotice('✨ Gemini Vision is analyzing garment attributes...');
+    setAiTagNotice('Analyzing garment details...');
 
     try {
       const formData = new FormData();
@@ -156,7 +156,7 @@ export default function UploadPage() {
         if (Array.isArray(data.season) && data.season.length > 0) setSelectedSeasons(data.season);
         if (Array.isArray(data.tags)) setTags(data.tags);
 
-        setAiTagNotice('✨ Auto-tagged with AI! You can refine any field below.');
+        setAiTagNotice('Attributes suggested. You can refine any field below.');
       }
     } catch (err) {
       console.warn('AI analysis fallback:', err.message);
@@ -275,7 +275,7 @@ export default function UploadPage() {
     return (
       <div className="upload-page">
         <div className="upload-success animate-slide-up">
-          <h2 className="upload-success__title">✨ Added to Wardrobe!</h2>
+          <h2 className="upload-success__title">Added to Wardrobe</h2>
           <p className="upload-success__text">
             Your item is cataloged with smart layering, fabric, and formality tags.
           </p>
@@ -284,7 +284,7 @@ export default function UploadPage() {
               className="upload-btn upload-btn--primary"
               onClick={() => navigate('/studio')}
             >
-              Style in Studio ✨
+              Style in Studio
             </button>
             <button
               className="upload-btn upload-btn--secondary"
@@ -341,7 +341,7 @@ export default function UploadPage() {
               />
               <span className="upload-ai-toggle__slider" />
               <span className="upload-ai-toggle__label">
-                ✨ <strong>AI Background Cutout</strong>
+                <strong>Clean Background Cutout</strong>
               </span>
             </label>
             <span className="upload-ai-hint">Isolates garment for Runway Mannequin</span>
@@ -386,7 +386,7 @@ export default function UploadPage() {
                       className={`upload-switcher-btn ${useCutout ? 'upload-switcher-btn--active' : ''}`}
                       onClick={() => toggleCutoutMode(true)}
                     >
-                      ✨ Cutout
+                      Cutout
                     </button>
                     <button
                       type="button"
@@ -593,7 +593,7 @@ export default function UploadPage() {
                   className={`upload-season-chip ${selectedSeasons.includes(s) ? 'upload-season-chip--active' : ''}`}
                   onClick={() => toggleSeason(s)}
                 >
-                  {s === 'all_season' ? '✨ All Seasons' : s.charAt(0).toUpperCase() + s.slice(1)}
+                  {s === 'all_season' ? 'All Seasons' : s.charAt(0).toUpperCase() + s.slice(1)}
                 </button>
               ))}
             </div>
@@ -639,7 +639,7 @@ export default function UploadPage() {
                 Gemini Vision Tagging...
               </>
             ) : (
-              '✨ Save Garment to Wardrobe'
+              'Save to Wardrobe'
             )}
           </button>
         </form>

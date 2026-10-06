@@ -1,17 +1,17 @@
-# 👗 Personal Wardrobe & Outfit Planner
+#  Personal Wardrobe & Outfit Planner
 
 A clean, easy-to-use digital closet that helps you organize the clothes you own and puts together outfit ideas based on the daily weather.
 
 ---
 
-## 🌐 Live Website
+##  Live Website
 
 - **Website:** [personal-wardrobe-fawn.vercel.app](https://personal-wardrobe-fawn.vercel.app)
 - **API Server:** [personal-wardrobe.onrender.com](https://personal-wardrobe.onrender.com)
 
 ---
 
-## 💡 What It Does
+##  What It Does
 
 1. **Digital Closet:** Upload photos of your clothes. The app automatically cuts out the background so your closet looks clean and organized.
 2. **Category & Tagging:** Sort items by tops, bottoms, shoes, jackets, and accessories by season and color.
@@ -21,7 +21,7 @@ A clean, easy-to-use digital closet that helps you organize the clothes you own 
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend:** React, Tailwind CSS, Vite
 - **Backend:** Node.js, Express
@@ -31,7 +31,7 @@ A clean, easy-to-use digital closet that helps you organize the clothes you own 
 
 ---
 
-## 🚀 Running Locally
+##  Running Locally
 
 ### 1. Clone the project
 ```bash
@@ -57,5 +57,5 @@ Open `http://localhost:5173` in your browser.
 
 ---
 
-## 👩‍💻 Author
+## Author
 **Madhushmita Sen** — [GitHub Profile](https://github.com/Madhusmitasen2002)

@@ -27,8 +27,10 @@ export default function Navbar() {
       <div className="navbar__inner">
         {/* Brand */}
         <Link to="/" className="navbar__brand">
-          <span className="navbar__logo-icon">👔</span>
-          <span className="navbar__logo-text">Maddie's Outfit</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="navbar__logo-icon">
+            <path d="M12 4a3 3 0 0 0-3 3c0 .8.4 1.5 1 2l-7.5 9.5A1.5 1.5 0 0 0 3.7 21h16.6a1.5 1.5 0 0 0 1.2-2.5L14 9c.6-.5 1-1.2 1-2a3 3 0 0 0-3-3z"/>
+          </svg>
+          <span className="navbar__logo-text">Maddie's Closet</span>
         </Link>
 
         {/* Desktop links */}
@@ -48,7 +50,7 @@ export default function Navbar() {
                 to="/studio"
                 className={`navbar__link ${isActive('/studio') || isActive('/outfits') ? 'navbar__link--active' : ''}`}
               >
-                Outfit Studio ✨
+                Outfit Studio
               </Link>
               <Link
                 to="/upload"
@@ -113,7 +115,7 @@ export default function Navbar() {
               to="/studio"
               className={`navbar__mobile-link ${isActive('/studio') || isActive('/outfits') ? 'navbar__mobile-link--active' : ''}`}
             >
-              Outfit Studio ✨
+              Outfit Studio
             </Link>
             <Link
               to="/upload"
